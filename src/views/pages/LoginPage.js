@@ -23,8 +23,8 @@ export default class LoginPage extends Component {
     super(props);
     this.state = {
         data: {
-            username: "",
-            password: "",
+            username: "admin",
+            password: "123456",
         },
         message: {
             err: "",
@@ -46,7 +46,7 @@ btnLogin = () => {
             }, 1000)
             this.setState({ message: { success: "Successful!"}} )
         }
-        this.setState({ loading: false})
+        // this.setState({ loading: false})
     }).catch(err => {
         console.log(err.response);
         this.setState({ loading: false});
@@ -59,7 +59,7 @@ onDataChange = (event) => {
 }
   render() {
     const{data, message, loading} =this.state;
-    console.log(data)
+    // console.log(data)
     return (
       <div>
         <Card title="Login Page" style={{textAlign: "center"}}>
@@ -84,8 +84,8 @@ onDataChange = (event) => {
               },
             ]}
           >
-            <Input name="username" defaultValue={data.username} onChange={this.onDataChange}/>
-            {/* <Input /> value={data.username} onChange={this.onDataChange} */}
+            <Input name="username"   value={data.username} onChange={this.onDataChange}/>
+            
           </Form.Item>
 
           <Form.Item
@@ -98,20 +98,22 @@ onDataChange = (event) => {
               },
             ]}
           >
-            <Input.Password  name="password" defaultValue={data.password} onChange={this.onDataChange}/>
+            <Input.Password  name="password" value={data.password} onChange={this.onDataChange}/>
           </Form.Item>
 
           <Form.Item {...tailLayout} name="remember" valuePropName="checked">
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
-
+          {
+            message.err &&
+          (<Alert message={message.err} type="error" style={{width: "300px", margin:"10px auto" }} />)}
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit" onClick={this.btnLogin} disabled={loading}>
               {loading ? <Spin /> :"Submit"}
               
             </Button>
           </Form.Item>
-          <Alert message="Error Text" type="error" />
+         
         </Form>
         </Card>
       
